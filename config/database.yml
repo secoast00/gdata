@@ -8,8 +8,10 @@ development: &dev
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 
-test: <<: *dev
+test:
+  <<: *dev
   database: db/test.sqlite3
 
-production: <<: *dev
+production: 
+  <<: *dev
   database: db/production.sqlite3

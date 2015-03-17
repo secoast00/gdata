@@ -6,6 +6,7 @@ gem 'sqlite3'
 
 gem 'json'
 gem 'jquery-rails'
+gem 'faraday'
 
 group :assets do
   gem 'sass-rails'
