@@ -1,9 +1,10 @@
 require 'rails_helper'
 require Rails.root.join('spec/support/network')
+require Rails.root.join('spec/support/factory')
 
 describe Event, type: :model do
 
-  let(:events) { JSON.parse( File.read('spec/fixtures/secoast00.json'))}
+  let(:events) { JSON.parse( Factory.events_feed_json("secoast00") )}
   let(:actor) { Actor.new }
 
   describe ".create_from_record" do
@@ -44,39 +45,42 @@ describe Event, type: :model do
 
     it "event hash is formatted correctly" do
       {
-        :CommitCommentEvent => 2,
-        :IssueCommentEvent  => 2,
-        :IssuesEvent        => 3,
-        :WatchEvent         => 1,
-        :PullRequestEvent   => 5,
-        :PushEvent          => 7,
-        :FollowEvent        => 1,
-        :CreateEvent        => 3
+          "CommitCommentEvent" => 2,
+          "IssueCommentEvent"  => 2,
+          "IssuesEvent"        => 3,
+          "WatchEvent"         => 1,
+          "PullRequestEvent"   => 5,
+          "PushEvent"          => 7,
+          "FollowEvent"        => 1,
+          "CreateEvent"        => 3
       }.each do |category, score|
         e = Event.new :category => category
         expect(score).to eq e.score
       end
 
     end
+
     context "having events" do
 
       it "calculates a github score" do
         events.each do |record|
           Event.create_from_record actor, record
         end
-        events = Event.where(:actor_id => 1)
-        score  = events.map(&:score).reduce(:+)
 
-        expect(actor.score).to eq score
+        actor_with_score = Actor.first
+        expect(actor_with_score.score).to eq 25
       end
+
     end
 
     context "having no events" do
+
       it "returns 0" do
         event = Event.new
 
         expect(event.score).to eq 0
       end 
+
     end
 
   end

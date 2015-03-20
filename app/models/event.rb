@@ -5,16 +5,15 @@ class Event < ActiveRecord::Base
 
   SCORES =
       {
-          :CommitCommentEvent => 2,
-          :IssueCommentEvent  => 2,
-          :IssuesEvent        => 3,
-          :WatchEvent         => 1,
-          :PullRequestEvent   => 5,
-          :PushEvent          => 7,
-          :FollowEvent        => 1,
-          :CreateEvent        => 3
+          "CommitCommentEvent" => 2,
+          "IssueCommentEvent"  => 2,
+          "IssuesEvent"        => 3,
+          "WatchEvent"         => 1,
+          "PullRequestEvent"   => 5,
+          "PushEvent"          => 7,
+          "FollowEvent"        => 1,
+          "CreateEvent"        => 3
       }
-  BASE64 = 'm'
 
   def self.create_from_record actor, record
     fields = {

@@ -1,11 +1,12 @@
 require 'rails_helper'
 require 'github/client'
+require Rails.root.join('spec/support/factory')
 
 describe Actor, type: :model do
 
   describe ".import" do
 
-    let(:secoast_json) { File.read 'spec/fixtures/secoast00.json' }
+    let(:secoast_json) { Factory.events_feed_json("secoast00") }
     let(:client )      { instance_double("client", :fetch => JSON.parse(secoast_json)) }
 
     before :each do
@@ -14,12 +15,29 @@ describe Actor, type: :model do
 
     context "given a github username" do
 
-      it "saves a single actor with the correct username" do
-        Actor.import 'secoast00'
+      it "saves a single actor" do
+        Actor.import "secoast00"
 
-        actor = Actor.first
         expect(Actor.count).to eq 1
+      end
+
+      it "has the correct name" do
+        actor = Actor.import "secoast00"
+
         expect(actor.name).to eq "secoast00"
+      end
+
+      it "has related events" do
+        actor = Actor.import "secoast00"
+
+        expect(actor.events.count).to eq 7
+      end
+
+      it "has a calculated score" do
+        Actor.import "secoast00"
+        actor = Actor.find_by(:name => "secoast00")
+
+        expect(actor.score).to eq 25
       end
 
     end
@@ -27,8 +45,9 @@ describe Actor, type: :model do
     context "given a username already imported" do
 
       it "does not duplicate data" do
-        Actor.import 'secoast00'
-        Actor.import 'secoast00'
+        2.times do
+          Actor.import 'secoast00'
+        end
 
         expect(Actor.count).to eq 1
       end

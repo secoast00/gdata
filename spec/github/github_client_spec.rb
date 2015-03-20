@@ -1,13 +1,14 @@
 require 'rails_helper'
 require 'github/client'
 require Rails.root.join('spec/support/network')
+require Rails.root.join('spec/support/factory')
 
 module Github
 
   describe Client do
 
     before :each do
-      stub_github_feed
+      stub_github_feed "secoast00"
     end
 
     describe ".fetch" do
