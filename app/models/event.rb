@@ -30,4 +30,8 @@ class Event < ActiveRecord::Base
     SCORES.fetch(category) { 0 }
   end
 
+  def category_words
+    category.split(/(?=[A-Z])/).join(" ")
+  end
+
 end

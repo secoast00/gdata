@@ -1,0 +1,26 @@
+<h1>Listing actors</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Account Name</th>
+      <th></th>
+      <th>Score</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @actors.each do |actor| %>
+      <tr>
+        <td><%= actor.name %></td>
+        <td></td>
+        <td><%= actor.score %></td>
+        <td><%= link_to 'Events', actor %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

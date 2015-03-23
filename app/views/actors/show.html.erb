@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+<b> Name:</b>
+<%= @actor.name %>
+<h2>Events</h2>
+<%= render @actor.events %>
+
+<%= link_to 'Back', actors_path %>
