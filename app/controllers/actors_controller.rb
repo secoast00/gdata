@@ -10,31 +10,11 @@ class ActorsController < ApplicationController
   def show
   end
 
-  # GET /actors/new
-  def new
-    @actor = Actor.new
-  end
-
-
-  # POST /actors
-  def create
-    @actor = Actor.new(actor_params)
-
-    if @actor.save
-      redirect_to @actor, notice: 'Actor was successfully created.'
-    else
-      render action: 'new'
-    end
-  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_actor
       @actor = Actor.find(params[:id])
     end
 
-    # Only allow a trusted parameter "white list" through.
-    def actor_params
-      params[:actor]
-    end
 end
